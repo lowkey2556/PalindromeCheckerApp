@@ -1,14 +1,15 @@
 public class PalindromeCheckerApp {
     public static void main (String[] args){
-        String text = "madam";
+        String text = "zeeshan";
+        String reversed = "";
         System.out.println("Input text: "+text);
-        boolean palindrome = true;
-        for(int i=0; i<text.length()/2;i++){
-            if(text.charAt(i)!=text.charAt(text.length()-i-1)){
-                palindrome=false;
-                break;
-            }
+        for(int i = text.length()-1;i>=0;i--){
+            reversed+=text.charAt(i);
         }
-        System.out.println("Is it a palindrome? : "+palindrome);
+        if(text.equals(reversed)){
+            System.out.println("Is it a palindrome? : true");
+        }else{
+            System.out.println("Is it a palindrome? : false");
+        }
     }
 }
