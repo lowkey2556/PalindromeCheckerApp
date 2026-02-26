@@ -5,14 +5,33 @@ public class PalindromeCheckerApp {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Input : ");
         String input = scanner.nextLine();
-        PalindromeStrategy strategy = new StackStrategy();
+        PalindromeStrategy strategy = new PointerStrategy();
+        long startTime = System.nanoTime();
         boolean isPalindrome = strategy.checkPalindrome(input);
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
         System.out.println("Is Palindrome? : " + isPalindrome);
-        scanner.close();
+        System.out.println("Execution Time : " + duration + " ns");
     }
 }
 interface PalindromeStrategy {
     boolean checkPalindrome(String input);
+}
+class PointerStrategy implements PalindromeStrategy {
+    @Override
+    public boolean checkPalindrome(String input) {
+        if (input == null) return false;
+        int start = 0;
+        int end = input.length() - 1;
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
 }
 class StackStrategy implements PalindromeStrategy {
     @Override
@@ -23,24 +42,7 @@ class StackStrategy implements PalindromeStrategy {
             stack.push(c);
         }
         for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
-                return false;
-            }
-        }
-        return true;
-    }
-}
-class PointerStrategy implements PalindromeStrategy {
-    @Override
-    public boolean checkPalindrome(String input) {
-        int start = 0;
-        int end = input.length() - 1;
-        while (start < end) {
-            if (input.charAt(start) != input.charAt(end)) {
-                return false;
-            }
-            start++;
-            end--;
+            if (c != stack.pop()) return false;
         }
         return true;
     }
